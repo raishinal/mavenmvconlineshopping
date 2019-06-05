@@ -19,7 +19,7 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
            <property name="dataSource" ref="dataSource"/>
            <property name="packagesToScan">
-               <list><value>com.itn.model</value></list>
+               <list><value>com.myweb.model</value></list>
            </property>
            <property name="hibernateProperties">
                   <props>
@@ -37,13 +37,13 @@
        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     
-    <bean id="Category" class="com.itn.model.Category"></bean>
-    <bean id="userDetails" class="com.itn.model.UserDetails"></bean>
-    <bean id="userlogin" class="com.itn.model.UserLogin"></bean>
-    <bean id="Product" class="com.itn.model.Product"></bean>
-    <bean id="Blog" class="com.itn.model.Blog"></bean>
-    <bean id="Slider" class="com.itn.model.News"></bean>
-    <bean id="Cart" class="com.itn.model.Cart"></bean>
+    <bean id="Category" class="com.myweb.model.Category"></bean>
+    <bean id="userDetails" class="com.myweb.model.UserDetails"></bean>
+    <bean id="userlogin" class="com.myweb.model.UserLogin"></bean>
+    <bean id="Product" class="com.myweb.model.Product"></bean>
+    <bean id="Blog" class="com.myweb.model.Blog"></bean>
+    <bean id="Slider" class="com.myweb.model.News"></bean>
+    <bean id="Cart" class="com.myweb.model.Cart"></bean>
 
     
 </beans>

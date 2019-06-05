@@ -22,7 +22,7 @@
     </bean>
     
      
-    <context:component-scan base-package="com.itn"/>
+    <context:component-scan base-package="com.myweb"/>
     <mvc:annotation-driven/>
    
     <bean id="multipartResolver" 

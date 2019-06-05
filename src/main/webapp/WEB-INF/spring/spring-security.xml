@@ -42,7 +42,7 @@
             class="com.itn.config.CustomSuccessHandler" />-->
 
 <bean id="customSuccessHandler"
-class="com.itn.config.AuthSuccessHandler"/>
+class="com.myweb.config.AuthSuccessHandler"/>
 
 
 </beans>
