@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+          http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+">
+
+   <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/mavenwebapp"/>
+        <property name="username" value="root" />
+        <property name="password" value="" />
+    </bean>
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+           <property name="dataSource" ref="dataSource"/>
+           <property name="packagesToScan">
+               <list><value>com.itn.model</value></list>
+           </property>
+           <property name="hibernateProperties">
+                  <props>
+                      <prop key="hibernate.dialect" >org.hibernate.dialect.MySQL5Dialect</prop>
+                      <prop key="hibernate.hbm2ddl.auto">update</prop>
+                      <prop key="hibernate.show_sql" >true</prop>
+                  <prop key="hibernate.current_session_context_class">thread</prop> 
+                  </props>
+            </property>
+    </bean>
+        
+     <tx:annotation-driven/>
+                      
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+       <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="Category" class="com.itn.model.Category"></bean>
+    <bean id="userDetails" class="com.itn.model.UserDetails"></bean>
+    <bean id="userlogin" class="com.itn.model.UserLogin"></bean>
+    <bean id="Product" class="com.itn.model.Product"></bean>
+    <bean id="Blog" class="com.itn.model.Blog"></bean>
+    <bean id="Slider" class="com.itn.model.News"></bean>
+    <bean id="Cart" class="com.itn.model.Cart"></bean>
+
+    
+</beans>
