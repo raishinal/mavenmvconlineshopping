@@ -8,6 +8,7 @@ package com.myweb.controller;
 import com.myweb.model.Blog;
 import com.myweb.service.BlogService;
 import com.myweb.service.CategoryService;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,43 +38,79 @@ public class BlogController {
     
     @Autowired
     BlogService blogService;
-    
+    private int ustatus=0;
     @RequestMapping(value="/Admin/Blog/Add", method=RequestMethod.GET)
-   public ModelAndView addBlog(ModelAndView mv){
+   public ModelAndView addBlog(ModelAndView mv,Principal p){
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+          mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("tagslist", categoryService.findAllCategory());
         mv.setViewName("admin/addblog");
         return mv;
     }
     @RequestMapping(value="/Admin/Blog/Show", method=RequestMethod.GET)
-   public ModelAndView showBlog(ModelAndView mv){
+   public ModelAndView showBlog(ModelAndView mv,Principal p){
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+          mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("bloglist", blogService.findAllBlog());
         mv.setViewName("admin/displayblog");
         return mv;
     }
     @RequestMapping(value="/Admin/Blog/Add", method=RequestMethod.POST)
-    public String registerUser(@RequestParam("title") String title,
+    public ModelAndView registerUser(@RequestParam("title") String title,
             @RequestParam("category") int category,
             @RequestParam("description") String description,
             @RequestParam("tags") String tags,
             @RequestParam("status") int status,
             
-            @RequestParam("image") MultipartFile image
+            @RequestParam("image") MultipartFile image,
+            ModelAndView mv, Principal p
             
             ){
-      
+         try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+         mv.addObject("status",ustatus);
        // image 
        if(!image.isEmpty()){
            if(blogService.uploadImage(image)){
              blog.setImageName(image.getOriginalFilename());
            }
            else{
-               return "redirect:/Admin/Blog/Add?ImageUploadFailed";
+               mv.addObject("status","ImageUploadFailed");
+            
            }
        }
        else{
-           return "redirect:/Admin/Blog/Add?ImageNotSelected";
+           mv.addObject("status","ImageNotSelected");
+               
+          
        }
        
        // other form data
@@ -87,11 +124,14 @@ public class BlogController {
        
        
         if(!blogService.addBlog(blog)){
-          return "redirect:/Admin/Blog/Add?UserRegistrationFailed"; 
+            mv.addObject("status","UserRegistrationFailed");
+   
        }
-       
-       
-        return "redirect:/Admin/Blog/Add?Success";
+        else{
+            mv.addObject("status","Success");
+               
+        }
+        return mv;
     }
    
 }

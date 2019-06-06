@@ -35,13 +35,13 @@
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="<c:url value="/Admin/Home"/>"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-				<li class="active">Manage/User</li>
+				<li class="active">Users</li>
 			</ol>
 		</div><!--/.row-->
 		
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Management</h1>
+				<h1 class="page-header">User Management</h1>
 			</div>
 		</div><!--/.row-->
 				
@@ -49,12 +49,45 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">All Users</div>
+					<div class="panel-heading">Manage User</div>
 					<div class="panel-body">
-						<div class="col-md-6">
+						<div class="col-lg-12">
 							 
                              
-                             
+                              <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="cat-table">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Address</th>
+                                        <th>Remove User</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${userlist}" var="user">
+                                        <tr>
+                                            <td>${user.id}</td>
+                                            <td>${user.firstname}</td>
+                                            <td>${user.lastname}</td>
+                                            <td>${user.username}</td>
+                                            <td>${user.email}</td>
+                                            <td>${user.status}</td>
+                                            <td>${user.address}</td>
+                                           
+                                            <td><a href="<c:url value="/Admin/User/Remove/${user.id}"/>">Remove</a></td>
+
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                           
+                        </div>
                              
                              
                              

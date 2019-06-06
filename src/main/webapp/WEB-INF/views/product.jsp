@@ -103,7 +103,7 @@
                                                 <c:choose>
                                                  <c:when test="${pro.stock>0}">
                                                             <div class="card_area d-flex align-items-center">
-							<a class="primary-btn" href="#">Add to Cart</a>
+							<a class="primary-btn" href="<c:url value="/User/Purchase/${pro.id}"/>">Add to Cart</a>
 						</div>
                                                             </c:when>
                                                              </c:choose>

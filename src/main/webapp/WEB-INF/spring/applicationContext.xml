@@ -29,6 +29,9 @@
                   <prop key="hibernate.current_session_context_class">thread</prop> 
                   </props>
             </property>
+<!--            <mapping class="com.myweb.model.User_Details"/>
+            <mapping class="com.myweb.model.User_Login"/>
+            <mapping class="com.myweb.model.User_Role"/>-->
     </bean>
         
      <tx:annotation-driven/>
@@ -38,8 +41,9 @@
     </bean>
     
     <bean id="Category" class="com.myweb.model.Category"></bean>
-    <bean id="userDetails" class="com.myweb.model.UserDetails"></bean>
-    <bean id="userlogin" class="com.myweb.model.UserLogin"></bean>
+    <bean id="user_details" class="com.myweb.model.UserDetails"></bean>
+    <bean id="user_login" class="com.myweb.model.UserLogin"></bean>
+    <bean id="user_role" class="com.myweb.model.UserRole"></bean>
     <bean id="Product" class="com.myweb.model.Product"></bean>
     <bean id="Blog" class="com.myweb.model.Blog"></bean>
     <bean id="Slider" class="com.myweb.model.News"></bean>

@@ -8,6 +8,7 @@ package com.myweb.controller;
 import com.myweb.model.News;
 import com.myweb.service.CategoryService;
 import com.myweb.service.NewsService;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class NewsController {
-    
+    private int ustatus=0;
      private  DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
       LocalDateTime now = LocalDateTime.now();
       String formattedDateTime = now.format(dtf);
@@ -40,28 +41,61 @@ public class NewsController {
     NewsService newsService;
     
     @RequestMapping(value="/Admin/News/Add", method=RequestMethod.GET)
-   public ModelAndView addNews(ModelAndView mv){
+   public ModelAndView addNews(ModelAndView mv,Principal p){
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+          mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("tagslist", categoryService.findAllCategory());
         mv.setViewName("admin/addnews");
         return mv;
     }
     @RequestMapping(value="/Admin/News/Show", method=RequestMethod.GET)
-   public ModelAndView showNews(ModelAndView mv){
+   public ModelAndView showNews(ModelAndView mv,Principal p){
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+          mv.addObject("status",ustatus);
         mv.addObject("tagslist", categoryService.findAllCategory());
         mv.addObject("newslist", newsService.findAllNews());
         mv.setViewName("admin/displaynews");
         return mv;
     }
     @RequestMapping(value="/Admin/News/Add", method=RequestMethod.POST)
-    public String registerUser(@RequestParam("title") String title,
+    public ModelAndView registerNews(@RequestParam("title") String title,
             @RequestParam("tags") String tags,
             @RequestParam("description") String description,
             @RequestParam("status") int status,
             
-            @RequestParam("image") MultipartFile image
-            
+            @RequestParam("image") MultipartFile image,
+            ModelAndView mv,Principal p
             ){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+           mv.addObject("status",ustatus);
       
        // image 
        if(!image.isEmpty()){
@@ -69,11 +103,11 @@ public class NewsController {
              news.setImageName(image.getOriginalFilename());
            }
            else{
-               return "redirect:/Admin/News/Add?ImageUploadFailed";
-           }
+               mv.addObject("status","ImageUploadFailed");}
        }
        else{
-           return "redirect:/Admin/News/Add?ImageNotSelected";
+           mv.addObject("status","ImageNotSelected");
+         
        }
        
        // other form data
@@ -86,11 +120,14 @@ public class NewsController {
        
        
         if(!newsService.addNews(news)){
-          return "redirect:/Admin/News/Add?UserRegistrationFailed"; 
+         mv.addObject("status1","Failed");
        }
+        else{
+            mv.addObject("status1","Success");
+        }
        
        
-        return "redirect:/Admin/News/Add?Success";
+        return mv;
     }
    
 }

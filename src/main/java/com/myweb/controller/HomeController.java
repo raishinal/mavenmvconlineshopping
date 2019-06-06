@@ -83,22 +83,52 @@ public class HomeController {
         return mv;
     }
    @GetMapping("/About")
-    public ModelAndView showAbout(ModelAndView mv){
-      
+    public ModelAndView showAbout(ModelAndView mv ,Principal p){
+            try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+      mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findAllCategory());
         mv.setViewName("about");
         return mv;
     }
    @GetMapping("/Contact")
-    public ModelAndView showContact(ModelAndView mv){
-       
+    public ModelAndView showContact(ModelAndView mv ,Principal p){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
         mv.addObject("categorylist", categoryService.findAllCategory());
         mv.setViewName("contact");
+        mv.addObject("status",ustatus);
         return mv;
     }
    @GetMapping("/Blog")
-    public ModelAndView showBlog(ModelAndView mv){
-       
+    public ModelAndView showBlog(ModelAndView mv, Principal p){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+           mv.addObject("status",ustatus);
         mv.addObject("tagslist", categoryService.findAllCategory());
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("bloglist", blogService.findAllBlog());
@@ -107,11 +137,41 @@ public class HomeController {
     }
     
       @GetMapping("/Blog/{id}")
-    public ModelAndView showBlogById(@PathVariable int id, ModelAndView mv){
-       
+    public ModelAndView showBlogById(@PathVariable int id, ModelAndView mv, Principal p){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+           mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findAllCategory());
         mv.addObject("blogitem", blogService.findBlogById(id));
         mv.setViewName("blogdetail");
+        return mv;
+    }
+    
+    
+     @GetMapping("/News/Show/{id}")
+    public ModelAndView showNewsById(@PathVariable int id, ModelAndView mv,Principal p){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+           mv.addObject("status",ustatus);
+        mv.addObject("categorylist", categoryService.findAllCategory());
+        mv.addObject("newsitem", newsService.findNewsById(id));
+        mv.setViewName("news");
         return mv;
     }
     
@@ -124,23 +184,53 @@ public class HomeController {
     
      
     @GetMapping("/Product/{id}")
-    public ModelAndView showProductById(@PathVariable int id, ModelAndView mv){
-       
+    public ModelAndView showProductById(@PathVariable int id, ModelAndView mv ,Principal p){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+           mv.addObject("status",ustatus);
         mv.addObject("productdetail", productService.findProductById(id));
         mv.setViewName("product");
         return mv;
     }
     @GetMapping("/Product/Category/Show")
-    public ModelAndView showProductsCategory( ModelAndView mv){
-      
+    public ModelAndView showProductsCategory( ModelAndView mv,Principal p){
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+          mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("tagslist", categoryService.findAllCategory());
         mv.setViewName("itembycategory");
         return mv;
     }
     @GetMapping("/Product/Category/Show/{tag}")
-    public ModelAndView showProductByCategory(@PathVariable String tag, ModelAndView mv){
-      
+    public ModelAndView showProductByCategory(@PathVariable String tag, ModelAndView mv,Principal p){
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+          mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("tagslist", categoryService.findAllCategory());
        mv.addObject("tagitem", productService.findProductByTags(tag));
@@ -243,7 +333,7 @@ public class HomeController {
         if (auth1 != null){    
             new SecurityContextLogoutHandler().logout(request, response, auth1);
         }
-        return "index";
+        return "login";
     }
 }
  

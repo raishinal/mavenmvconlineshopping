@@ -10,6 +10,7 @@ import com.myweb.model.Product;
 import com.myweb.service.CartService;
 import com.myweb.service.CategoryService;
 import com.myweb.service.ProductService;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class ProductController {
       LocalDateTime now = LocalDateTime.now();
       String formattedDateTime = now.format(dtf);
       
-      
+      private int ustatus=0;
     @Autowired
     private Product product;
     @Autowired
@@ -48,7 +49,18 @@ public class ProductController {
     ProductService productService;
     
   @RequestMapping(value="/Admin/Product/Add", method=RequestMethod.GET)
-   public ModelAndView addProduct(ModelAndView mv){
+   public ModelAndView addProduct(ModelAndView mv,Principal p){
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+          mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findMainCategory());
                 mv.addObject("tagslist", categoryService.findAllCategory());
         mv.setViewName("admin/addproduct");
@@ -56,16 +68,28 @@ public class ProductController {
     }
    
      @RequestMapping(value="/Admin/Product/Add", method=RequestMethod.POST)
-    public String registerUser(@RequestParam("name") String name,
+    public ModelAndView registerUser(@RequestParam("name") String name,
             @RequestParam("category") int category,
             @RequestParam("tags") String tags,
             @RequestParam("description") String description,
             @RequestParam("specification") String specification,
             @RequestParam("price") double price,
             @RequestParam("stock") int stock,
-            @RequestParam("image") MultipartFile image
+            @RequestParam("image") MultipartFile image,
+            ModelAndView mv,Principal p
             
             ){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+           mv.addObject("status",ustatus);
       
        // image 
        if(!image.isEmpty()){
@@ -73,11 +97,11 @@ public class ProductController {
              product.setImageName(image.getOriginalFilename());
            }
            else{
-               return "redirect:/Admin/Product/Add?ImageUploadFailed";
+              mv.addObject("status","imageuploadfailed");
            }
        }
        else{
-           return "redirect:/Admin/Product/Add?ImageNotSelected";
+           mv.addObject("status","imagenotselected");
        }
        
        // other form data
@@ -90,14 +114,26 @@ public class ProductController {
        product.setPrice(price);
        
         if(!productService.addProduct(product)){
-          return "redirect:/Admin/Product/Add?UserRegistrationFailed"; 
+         mv.addObject("status1","failed");
        }
-       
-       
-        return "redirect:/Admin/Product/Add?Success";
+        else{
+            mv.addObject("status1","Success");
+        }
+    return mv;   
     }
       @GetMapping("/Admin/Product/Show")
-    public ModelAndView showProducts(ModelAndView mv){
+    public ModelAndView showProducts(ModelAndView mv,Principal p){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+           mv.addObject("status",ustatus);
         mv.addObject("productlist", productService.findAllProduct());
         mv.addObject("categorylist", categoryService.findAllCategory());
         mv.setViewName("admin/showproduct");
@@ -106,20 +142,41 @@ public class ProductController {
     
     
     @RequestMapping(value="/Admin/Product/Delete/{id}", method=RequestMethod.GET)
-   public String deleteProduct(@PathVariable int id ){
-       
+   public ModelAndView deleteProduct(ModelAndView mv,@PathVariable int id,Principal p ){
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+          mv.addObject("status",ustatus);
         if(productService.deleteProduct(id)){
-         return "redirect:/Admin/Product/Show?Delete success"; 
+        mv.addObject("status","success");
 
     }
         else{
-            return "redirect:/Admin/Product/Show?DeleteFailed"; 
+            mv.addObject("status","failed");
         }
-      
+      return mv;
    }
    
     @RequestMapping(value="/Admin/Product/Edit/{id}", method=RequestMethod.GET)
-   public ModelAndView editProduct(@PathVariable int id,ModelAndView mv){
+   public ModelAndView editProduct(@PathVariable int id,ModelAndView mv,Principal p){
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+          mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("product", productService.findProductById(id));
         mv.setViewName("admin/editproduct");
@@ -130,16 +187,27 @@ public class ProductController {
     
     
       @RequestMapping(value="/Admin/Product/Update", method=RequestMethod.POST)
-    public String updateUser(
+    public ModelAndView updateUser(
             @RequestParam("id") int id,
             @RequestParam("name") String name,
             @RequestParam("category") int category,
             @RequestParam("description") String description,
             @RequestParam("price") double price,
             @RequestParam("imagename") String imagename,
-            @RequestParam("image") MultipartFile image
+            @RequestParam("image") MultipartFile image,
+            ModelAndView mv,Principal p
             
             ){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }mv.addObject("status",ustatus);
       
        // image 
        if(!image.isEmpty()){
@@ -147,7 +215,7 @@ public class ProductController {
              product.setImageName(image.getOriginalFilename());
            }
            else{
-               return "redirect:/Admin/Product/Edit?ImageUploadFailed";
+               mv.addObject("status","imageuploadfailed");
            }
        }
        else{
@@ -164,11 +232,14 @@ public class ProductController {
        product.setPrice(price);
        
         if(!productService.updateProduct(product)){
-          return "redirect:/Admin/Product/Show?Failure"; 
+         mv.addObject("status1","failed");
        }
+        else{
+            
+        mv.addObject("status1","success");
+        }
+       return mv;
        
-       
-        return "redirect:/Admin/Product/Show?Success";
     }
     
     

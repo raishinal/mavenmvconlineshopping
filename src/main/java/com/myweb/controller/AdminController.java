@@ -26,23 +26,56 @@ public class AdminController {
      
     @Autowired
      UserService userService;
-  
+  private int ustatus=0;
     @GetMapping("/Admin/Home")
     public ModelAndView adminHome(ModelAndView mv,Principal p){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+           mv.addObject("status",ustatus);
         mv.setViewName("admin/admindashboard");
         mv.addObject("user",p.getName() );
        
         return mv;
     }
     @GetMapping("/Admin/UserManagement")
-    public ModelAndView userManagement(ModelAndView mv,Principal p){
-        mv.setViewName("admin/usermanagemnt");
-        mv.addObject("user",p.getName() );
+    public ModelAndView user_Management(ModelAndView mv,Principal p){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+           mv.addObject("status",ustatus);
+        mv.setViewName("admin/usermanagement");
+        mv.addObject("userlist",userService.findUserByUsername(p.getName()));
         return mv;
     }
     
     @GetMapping("/Admin/Edit")
     public ModelAndView editAdmin(ModelAndView mv,Principal p){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+           mv.addObject("status",ustatus);
 
         mv.addObject("user",p.getName() );
 //        List<Integer> userid=userService.findUserByUsername(p.getName());

@@ -51,7 +51,7 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Manage Order</div>
 					<div class="panel-body">
-						<div class="col-md-6">
+						<div class="col-lg-12">
 							 
                              
                               <div class="panel-body">
@@ -61,6 +61,7 @@
                                         <th>Id</th>
                                         <th>UserName</th>
                                         <th>Product ID</th>
+                                        <th>Product Quantity</th>
                                         <th>Product Name</th>
                                         <th>Ordered Date and Time</th>
                                         <th>Accept</th>
@@ -73,6 +74,7 @@
                                             <td>${cart.id}</td>
                                             <td>${cart.username}</td>
                                             <td>${cart.productid}</td>
+                                            <td>${cart.quantity}</td>
                                             <td>${cart.productname}</td>
                                             <td>${cart.orderdate}</td>
                                            

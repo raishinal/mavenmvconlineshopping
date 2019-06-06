@@ -12,7 +12,7 @@
 			<nav class="navbar navbar-expand-lg navbar-light main_box">
 				<div class="container">
 					<!-- Brand and toggle get grouped for better mobile display -->
-                                        <a class="navbar-brand logo_h" href="index.html"><img src="<c:url value="/resources/front/img/images.png"/>" alt=""></a>
+                                        <a class="navbar-brand logo_h" href="<c:url value="/Index"/>"><img src="<c:url value="/resources/front/img/images.png"/>" alt=""></a>
 					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 					 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="icon-bar"></span>
@@ -34,6 +34,7 @@
                                                             </c:if>
                                                             
                                                             <c:if test="${status==1}">
+                                                            <li class="nav-item active"><a class="nav-link" href="<c:url value="/User/Cart"/>">My Cart</a></li>
                                                             <li class="nav-item active"><a class="nav-link" href="<c:url value="/Logout"/>">Logout</a></li>
                                                             </c:if>
                                                             

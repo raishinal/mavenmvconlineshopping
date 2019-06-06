@@ -45,14 +45,27 @@ public class OrderController {
     
     @Autowired
     ProductService productService;
-      
+      private int ustatus=0;
       @RequestMapping(value="/User/Purchase/{id}", method=RequestMethod.GET)
    public ModelAndView addCart(@PathVariable int id,ModelAndView mv,Principal p){
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+          mv.addObject("status",ustatus);
         mv.addObject("product", productService.findProductById(id));
          List<Product> pro= productService.findProductById(id);
         Product pd=pro.get(0);
         cart.setUsername(p.getName());
         cart.setProductid(pd.getId());
+        cart.setQuantity(1);
+        cart.setPrice(pd.getPrice());
         cart.setProductname(pd.getName());
         cart.setOrderdate(formattedDateTime);
         if(cartService.addCart(cart)){
@@ -62,14 +75,24 @@ public class OrderController {
         else{
        mv.addObject("failure");  
         }
-             mv.setViewName("user/userhome");
+             mv.setViewName("Index");
         return mv;
     }
    
     
     @RequestMapping(value="/Admin/Order", method=RequestMethod.GET)
-   public ModelAndView showOrder(ModelAndView mv){
-
+   public ModelAndView showOrder(ModelAndView mv,Principal p){
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+mv.addObject("status",ustatus);
         mv.addObject("cartlist", cartService.findAllCart());
         mv.setViewName("admin/ordermanagement");
         return mv;
@@ -79,9 +102,19 @@ public class OrderController {
    
     @RequestMapping(value="/User/Cart", method=RequestMethod.GET)
    public ModelAndView showCart(ModelAndView mv,Principal p){
-
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+mv.addObject("status",ustatus);
         mv.addObject("cartlist", cartService.findCartByUsername(p.getName()));
-        mv.setViewName("user/userorder");
+        mv.setViewName("cart");
         return mv;
     }
    

@@ -7,6 +7,7 @@ package com.myweb.controller;
 
 import com.myweb.model.Category;
 import com.myweb.service.CategoryService;
+import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,9 +31,20 @@ public class CategoryController {
     
     @Autowired
     CategoryService categoryService;
-    
+    private int ustatus=0;
     @GetMapping("/Admin/Category/Add")
-    public ModelAndView addCategory(ModelAndView mv){
+    public ModelAndView addCategory(ModelAndView mv,Principal p){
+            try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+            mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.setViewName("admin/addcategory");
         return mv;
@@ -40,7 +52,19 @@ public class CategoryController {
     
     @PostMapping("/Admin/Category/Add")
     public ModelAndView saveCategory(ModelAndView mv,
-                                    @ModelAttribute Category cat){
+                                    @ModelAttribute Category cat,Principal p){
+        
+            try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+            mv.addObject("status",ustatus);
         System.out.println(cat.toString());
         categoryService.addCategory(cat);
         
@@ -50,7 +74,18 @@ public class CategoryController {
     
     
     @GetMapping("/Admin/Category/Show")
-    public ModelAndView showCategories(ModelAndView mv){
+    public ModelAndView showCategories(ModelAndView mv,Principal p){
+            try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+            mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findAllCategory());
         mv.setViewName("admin/showcategory");
         return mv;
@@ -60,7 +95,7 @@ public class CategoryController {
     
     
     @RequestMapping(value="/Admin/Category/Delete/{id}", method=RequestMethod.GET)
-   public String deleteProduct(@PathVariable int id ){
+   public String deleteProduct(@PathVariable int id ,Principal p){
        
         if(categoryService.deleteCategory(id)){
          return "redirect:/Admin/Category/Show?Delete success"; 
@@ -73,7 +108,18 @@ public class CategoryController {
    }
    
     @RequestMapping(value="/Admin/Category/Edit/{id}", method=RequestMethod.GET)
-   public ModelAndView editProduct(@PathVariable int id,ModelAndView mv){
+   public ModelAndView editProduct(@PathVariable int id,ModelAndView mv,Principal p){
+           try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+           mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("category", categoryService.findCategoryById(id));
         mv.setViewName("admin/editcategory");
@@ -84,16 +130,28 @@ public class CategoryController {
     
     
       @RequestMapping(value="/Admin/Category/Update", method=RequestMethod.POST)
-    public String updateUser(
+    public ModelAndView updateUser(
             @RequestParam("id") int id,
             @RequestParam("title") String title,
             @RequestParam("tags") String tags,
             @RequestParam("description") String description,
-            @RequestParam("pid") int pid
+            @RequestParam("pid") int pid,
+            Principal p,
+            ModelAndView mv
             
             ){
       
-      
+          try{
+            if(p.getName()!=null)
+            {
+                ustatus=1;
+                mv.addObject("username",p.getName());
+        }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+          mv.addObject("status",ustatus);
       category.setId(id);
       category.setTitle(title);
       category.setTags(tags);
@@ -101,11 +159,12 @@ public class CategoryController {
       category.setPid(pid);
        
         if(!categoryService.updateCategory(category)){
-          return "redirect:/Admin/Category/Show?Failure"; 
+       mv.addObject("success","success");
        }
        
        
-        return "redirect:/Admin/Category/Show?Success";
+       mv.setViewName("/admin/category/show");
+       return mv;
     }
     
     
