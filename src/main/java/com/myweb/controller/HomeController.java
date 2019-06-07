@@ -65,6 +65,7 @@ public class HomeController {
     public ModelAndView showIndex(ModelAndView mv ,Principal p){
 
         mv.addObject("productlist", productService.findAllProduct());
+        mv.addObject("bloglist", blogService.findAllBlog());
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("sliderlist",newsService.findnewsByActivation() );
         try{

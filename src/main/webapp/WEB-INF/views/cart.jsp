@@ -75,7 +75,7 @@
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
-<!--                                            <img src="img/cart.jpg" alt="">-->
+                                            <img src="<c:url value="/resources/productimage/${cart.productimage}"/>" alt="">
                                         </div>
                                         <div class="media-body"><a href="<c:url value="/Product/${cart.productid}"/>">
                                             <p>${cart.productname}</p></a>

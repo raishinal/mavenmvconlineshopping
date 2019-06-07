@@ -67,6 +67,7 @@ public class OrderController {
         cart.setQuantity(1);
         cart.setPrice(pd.getPrice());
         cart.setProductname(pd.getName());
+        cart.setProductimage(pd.getImageName());
         cart.setOrderdate(formattedDateTime);
         if(cartService.addCart(cart)){
        mv.addObject("success");

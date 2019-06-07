@@ -58,7 +58,7 @@
                                         
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                         <div class="form-group">
-                                            <label>Product Name</label>
+                                            <label>News Title</label>
                                             <input class="form-control" type="text" placeholder="News title here" name="title">
                                              <p class="help-block">${error_title}</p>
                                         </div>

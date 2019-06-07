@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,7 +58,7 @@ public class BlogController {
         mv.setViewName("admin/addblog");
         return mv;
     }
-    @RequestMapping(value="/Admin/Blog/Show", method=RequestMethod.GET)
+   @PostMapping("/Admin/Blog/Show")
    public ModelAndView showBlog(ModelAndView mv,Principal p){
           try{
             if(p.getName()!=null)
@@ -75,40 +76,39 @@ public class BlogController {
         mv.setViewName("admin/displayblog");
         return mv;
     }
-    @RequestMapping(value="/Admin/Blog/Add", method=RequestMethod.POST)
-    public ModelAndView registerUser(@RequestParam("title") String title,
+   @RequestMapping(value="/Admin/Blog/Add", method=RequestMethod.POST)
+    public String registerUser(@RequestParam("title") String title,
             @RequestParam("category") int category,
             @RequestParam("description") String description,
             @RequestParam("tags") String tags,
             @RequestParam("status") int status,
             
-            @RequestParam("image") MultipartFile image,
-            ModelAndView mv, Principal p
+            @RequestParam("image") MultipartFile image,Principal p
             
             ){
-         try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-         mv.addObject("status",ustatus);
+//         try{
+//            if(p.getName()!=null)
+//            {
+//                ustatus=1;
+//               return "redirect:/Admin/Blog/Add?ImageNotUploaded";
+//        }
+//        }
+//        catch(Exception e){
+//            System.out.println(e);
+//        }
+//         mv.addObject("status",ustatus);
        // image 
        if(!image.isEmpty()){
            if(blogService.uploadImage(image)){
              blog.setImageName(image.getOriginalFilename());
            }
            else{
-               mv.addObject("status","ImageUploadFailed");
+               return "redirect:/Admin/Blog/Add?ImageNotUploaded";
             
            }
        }
        else{
-           mv.addObject("status","ImageNotSelected");
+          return "redirect:/Admin/Blog/Add?ImageNotSelected";
                
           
        }
@@ -124,14 +124,14 @@ public class BlogController {
        
        
         if(!blogService.addBlog(blog)){
-            mv.addObject("status","UserRegistrationFailed");
+            return "redirect:/Admin/Blog/Add?RegistrationFailed";
    
        }
         else{
-            mv.addObject("status","Success");
+            return "redirect:/Admin/Blog/Add?Success";
                
         }
-        return mv;
+
     }
    
 }

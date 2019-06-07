@@ -68,40 +68,28 @@ public class ProductController {
     }
    
      @RequestMapping(value="/Admin/Product/Add", method=RequestMethod.POST)
-    public ModelAndView registerUser(@RequestParam("name") String name,
+    public String registerUser(@RequestParam("name") String name,
             @RequestParam("category") int category,
             @RequestParam("tags") String tags,
             @RequestParam("description") String description,
             @RequestParam("specification") String specification,
             @RequestParam("price") double price,
             @RequestParam("stock") int stock,
-            @RequestParam("image") MultipartFile image,
-            ModelAndView mv,Principal p
+            @RequestParam("image") MultipartFile image,Principal p
             
             ){
-           try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-           mv.addObject("status",ustatus);
-      
+        
        // image 
        if(!image.isEmpty()){
            if(productService.uploadImage(image)){
              product.setImageName(image.getOriginalFilename());
            }
            else{
-              mv.addObject("status","imageuploadfailed");
+              return "redirect:/Admin/Product/Add?ImageNotUploaded";
            }
        }
        else{
-           mv.addObject("status","imagenotselected");
+       return "redirect:/Admin/Product/Add?ImageNotSelected";
        }
        
        // other form data
@@ -114,12 +102,11 @@ public class ProductController {
        product.setPrice(price);
        
         if(!productService.addProduct(product)){
-         mv.addObject("status1","failed");
+        return "redirect:/Admin/Product/Add?Failed";
        }
         else{
-            mv.addObject("status1","Success");
+            return "redirect:/Admin/Product/Add?Success";
         }
-    return mv;   
     }
       @GetMapping("/Admin/Product/Show")
     public ModelAndView showProducts(ModelAndView mv,Principal p){

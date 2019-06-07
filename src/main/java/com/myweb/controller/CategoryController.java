@@ -53,18 +53,8 @@ public class CategoryController {
     @PostMapping("/Admin/Category/Add")
     public ModelAndView saveCategory(ModelAndView mv,
                                     @ModelAttribute Category cat,Principal p){
-        
-            try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-            mv.addObject("status",ustatus);
+
+mv.addObject("username",p.getName());
         System.out.println(cat.toString());
         categoryService.addCategory(cat);
         
@@ -95,8 +85,8 @@ public class CategoryController {
     
     
     @RequestMapping(value="/Admin/Category/Delete/{id}", method=RequestMethod.GET)
-   public String deleteProduct(@PathVariable int id ,Principal p){
-       
+   public String deleteProduct(@PathVariable("id") int id){
+
         if(categoryService.deleteCategory(id)){
          return "redirect:/Admin/Category/Show?Delete success"; 
 
@@ -109,17 +99,6 @@ public class CategoryController {
    
     @RequestMapping(value="/Admin/Category/Edit/{id}", method=RequestMethod.GET)
    public ModelAndView editProduct(@PathVariable int id,ModelAndView mv,Principal p){
-           try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-           mv.addObject("status",ustatus);
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("category", categoryService.findCategoryById(id));
         mv.setViewName("admin/editcategory");

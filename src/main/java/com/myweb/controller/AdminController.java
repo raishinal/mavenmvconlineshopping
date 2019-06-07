@@ -59,7 +59,7 @@ public class AdminController {
         }
            mv.addObject("status",ustatus);
         mv.setViewName("admin/usermanagement");
-        mv.addObject("userlist",userService.findUserByUsername(p.getName()));
+        mv.addObject("userlist",userService.findAllUser());
         return mv;
     }
     

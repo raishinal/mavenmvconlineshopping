@@ -82,7 +82,7 @@
                                                 </c:choose> 
                                             </td>
                                             <td><a href="<c:url value="/Admin/Category/Edit/${cat.id}"/>">Edit</a></td>
-                                            <td><a href="<c:url value="/Admin/Category/Delete/${cat.id}"/>">Delete</td>
+                                            <td><a href="<c:url value="/Admin/Category/Delete/${cat.id}"/>"  onclick="return confirm('Are you sure?')">Delete</a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

@@ -71,7 +71,7 @@ public class UserDaoImpl implements UserDao {
     public List<UserDetails> selectAll() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<UserDetails> mcl  = session.createQuery("from user_details").list();
+        List<UserDetails> mcl  = session.createQuery("from User_Details").list();
         session.getTransaction().commit();
         session.close();
         return mcl;
@@ -98,8 +98,8 @@ List mcl = query.list();
     public List<Integer> selectByUsername(String user) {
        Session session = sessionFactory.openSession();
         session.beginTransaction(); 
-        Query query = session.createQuery("select usr_dtl_id from user_login where username='raishin' ");
-//query.setParameter("code", user);
+        Query query = session.createQuery("select usr_dtl_id from user_login where username=: code ");
+
 List mcl = query.list();
         session.getTransaction().commit();
         session.close();

@@ -25,20 +25,22 @@ public class Cart {
     private double price;
     private String productname;
     private String orderdate;
+    private String productimage;
 
     public Cart() {
     }
 
-    public Cart(String username, int productid, int quantity, double price, String productname, String orderdate) {
+    public Cart(String username, int productid, int quantity, double price, String productname, String orderdate, String productimage) {
         this.username = username;
         this.productid = productid;
         this.quantity = quantity;
         this.price = price;
         this.productname = productname;
         this.orderdate = orderdate;
+        this.productimage = productimage;
     }
 
-    public Cart(int id, String username, int productid, int quantity, double price, String productname, String orderdate) {
+    public Cart(int id, String username, int productid, int quantity, double price, String productname, String orderdate, String productimage) {
         this.id = id;
         this.username = username;
         this.productid = productid;
@@ -46,6 +48,7 @@ public class Cart {
         this.price = price;
         this.productname = productname;
         this.orderdate = orderdate;
+        this.productimage = productimage;
     }
 
     public int getId() {
@@ -104,5 +107,12 @@ public class Cart {
         this.orderdate = orderdate;
     }
 
-   
+    public String getProductimage() {
+        return productimage;
+    }
+
+    public void setProductimage(String productimage) {
+        this.productimage = productimage;
+    }
+
 }

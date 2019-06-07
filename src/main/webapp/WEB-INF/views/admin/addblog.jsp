@@ -86,7 +86,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Choose Category tags blog</label>
+                                            <label>Choose Category tags for blog</label>
                                             <select class="form-control" name="tags">
                                               
                                                 <c:forEach items="${tagslist}" var="tag">

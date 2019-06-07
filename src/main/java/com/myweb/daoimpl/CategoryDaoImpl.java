@@ -73,11 +73,14 @@ List mcl = query.list();
 
     @Override
     public boolean delete(int id) {
+        Category cat=new Category();
+        cat.setId(id);
         boolean status=false;
  try( Session session = sessionFactory.getCurrentSession()) {
            session.beginTransaction();
-            session.delete(id);
+            session.delete(cat);
             session.getTransaction().commit();
+            session.close();
             status = true;
            
         }

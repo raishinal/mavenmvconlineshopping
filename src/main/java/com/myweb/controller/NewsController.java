@@ -77,25 +77,14 @@ public class NewsController {
         return mv;
     }
     @RequestMapping(value="/Admin/News/Add", method=RequestMethod.POST)
-    public ModelAndView registerNews(@RequestParam("title") String title,
+    public String registerNews(@RequestParam("title") String title,
             @RequestParam("tags") String tags,
             @RequestParam("description") String description,
             @RequestParam("status") int status,
             
-            @RequestParam("image") MultipartFile image,
-            ModelAndView mv,Principal p
+            @RequestParam("image") MultipartFile image,Principal p
             ){
-           try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-           mv.addObject("status",ustatus);
+        
       
        // image 
        if(!image.isEmpty()){
@@ -103,10 +92,11 @@ public class NewsController {
              news.setImageName(image.getOriginalFilename());
            }
            else{
-               mv.addObject("status","ImageUploadFailed");}
+              return "redirect:/Admin/News/Add?ImageUploadFailed";
+       }
        }
        else{
-           mv.addObject("status","ImageNotSelected");
+                        return "redirect:/Admin/News/Add?ImageNotSelected";
          
        }
        
@@ -120,14 +110,12 @@ public class NewsController {
        
        
         if(!newsService.addNews(news)){
-         mv.addObject("status1","Failed");
+                       return "redirect:/Admin/News/Add?Failed";
        }
         else{
-            mv.addObject("status1","Success");
+                    return "redirect:/Admin/News/Add?Success";
         }
-       
-       
-        return mv;
+ 
     }
    
 }
