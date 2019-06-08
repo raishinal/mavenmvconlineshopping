@@ -21,8 +21,8 @@ public interface BlogDao {
     public List<Blog> selectByCategory(int category);
     public List<Blog> selectByActivation();
     
-    public void update(Blog bl);
+    public boolean update(Blog bl);
     
-    public void delete(int id);
+    public boolean delete(int id);
     
 }

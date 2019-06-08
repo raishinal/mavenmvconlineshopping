@@ -75,7 +75,7 @@
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
-                                            <img src="<c:url value="/resources/productimage/${cart.productimage}"/>" alt="">
+                                            
                                         </div>
                                         <div class="media-body"><a href="<c:url value="/Product/${cart.productid}"/>">
                                             <p>${cart.productname}</p></a>
@@ -149,7 +149,7 @@
                                         </ul>
                                         <h6>Calculate Shipping <i class="fa fa-caret-down" aria-hidden="true"></i></h6>
                                         <select class="shipping_select">
-                                            <option value="1">Bangladesh</option>
+                                            <option value="1">Nepal</option>
                                             <option value="2">India</option>
                                             <option value="4">Pakistan</option>
                                         </select>

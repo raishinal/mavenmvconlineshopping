@@ -50,17 +50,7 @@ public class ProductController {
     
   @RequestMapping(value="/Admin/Product/Add", method=RequestMethod.GET)
    public ModelAndView addProduct(ModelAndView mv,Principal p){
-          try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-          mv.addObject("status",ustatus);
+          mv.addObject("user",p.getName() );
         mv.addObject("categorylist", categoryService.findMainCategory());
                 mv.addObject("tagslist", categoryService.findAllCategory());
         mv.setViewName("admin/addproduct");
@@ -110,17 +100,7 @@ public class ProductController {
     }
       @GetMapping("/Admin/Product/Show")
     public ModelAndView showProducts(ModelAndView mv,Principal p){
-           try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-           mv.addObject("status",ustatus);
+           mv.addObject("user",p.getName() );
         mv.addObject("productlist", productService.findAllProduct());
         mv.addObject("categorylist", categoryService.findAllCategory());
         mv.setViewName("admin/showproduct");
@@ -129,41 +109,19 @@ public class ProductController {
     
     
     @RequestMapping(value="/Admin/Product/Delete/{id}", method=RequestMethod.GET)
-   public ModelAndView deleteProduct(ModelAndView mv,@PathVariable int id,Principal p ){
-          try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-          mv.addObject("status",ustatus);
+   public String deleteProduct(@PathVariable int id,Principal p ){
         if(productService.deleteProduct(id)){
-        mv.addObject("status","success");
+        return "redirect:/Admin/Product/Show?Success";
 
     }
         else{
-            mv.addObject("status","failed");
+           return "redirect:/Admin/Product/Show?Failed";
         }
-      return mv;
    }
    
     @RequestMapping(value="/Admin/Product/Edit/{id}", method=RequestMethod.GET)
    public ModelAndView editProduct(@PathVariable int id,ModelAndView mv,Principal p){
-          try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-          mv.addObject("status",ustatus);
+          mv.addObject("user",p.getName() );
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("product", productService.findProductById(id));
         mv.setViewName("admin/editproduct");
@@ -174,27 +132,20 @@ public class ProductController {
     
     
       @RequestMapping(value="/Admin/Product/Update", method=RequestMethod.POST)
-    public ModelAndView updateUser(
+    public String updateUser(
             @RequestParam("id") int id,
             @RequestParam("name") String name,
+            @RequestParam("stock") int stock,
             @RequestParam("category") int category,
+            @RequestParam("tags") String tags,
             @RequestParam("description") String description,
+            @RequestParam("specification") String specification,
             @RequestParam("price") double price,
             @RequestParam("imagename") String imagename,
-            @RequestParam("image") MultipartFile image,
-            ModelAndView mv,Principal p
+            @RequestParam("image") MultipartFile image,Principal p
             
             ){
-           try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }mv.addObject("status",ustatus);
+           
       
        // image 
        if(!image.isEmpty()){
@@ -202,7 +153,7 @@ public class ProductController {
              product.setImageName(image.getOriginalFilename());
            }
            else{
-               mv.addObject("status","imageuploadfailed");
+                return "redirect:/Admin/Product/Show?ImageUploadFailed"; 
            }
        }
        else{
@@ -214,18 +165,20 @@ public class ProductController {
        // other form data
        product.setId(id);
        product.setName(name);
+       product.setStock(stock);
        product.setCategory(category);
+       product.setTags(tags);
        product.setDescription(description);
+       product.setSpecification(specification);
        product.setPrice(price);
        
         if(!productService.updateProduct(product)){
-         mv.addObject("status1","failed");
+          return "redirect:/Admin/Product/Show?failed"; 
        }
         else{
             
-        mv.addObject("status1","success");
+          return "redirect:/Admin/Product/Show?Success"; 
         }
-       return mv;
        
     }
     

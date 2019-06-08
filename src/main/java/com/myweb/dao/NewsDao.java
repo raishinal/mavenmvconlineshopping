@@ -21,7 +21,7 @@ public interface NewsDao {
     public List<News> selectByCategory(int category);
     public List<News> selectByActivation();
     
-    public void update(News bl);
+    public boolean update(News bl);
     
-    public void delete(int id);
+    public boolean delete(int id);
 }

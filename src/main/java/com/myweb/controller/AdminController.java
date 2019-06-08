@@ -29,17 +29,7 @@ public class AdminController {
   private int ustatus=0;
     @GetMapping("/Admin/Home")
     public ModelAndView adminHome(ModelAndView mv,Principal p){
-           try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-           mv.addObject("status",ustatus);
+         
         mv.setViewName("admin/admindashboard");
         mv.addObject("user",p.getName() );
        
@@ -47,17 +37,7 @@ public class AdminController {
     }
     @GetMapping("/Admin/UserManagement")
     public ModelAndView user_Management(ModelAndView mv,Principal p){
-           try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-           mv.addObject("status",ustatus);
+         mv.addObject("user",p.getName() );
         mv.setViewName("admin/usermanagement");
         mv.addObject("userlist",userService.findAllUser());
         return mv;
@@ -65,17 +45,7 @@ public class AdminController {
     
     @GetMapping("/Admin/Edit")
     public ModelAndView editAdmin(ModelAndView mv,Principal p){
-           try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-           mv.addObject("status",ustatus);
+           mv.addObject("user",p.getName() );
 
         mv.addObject("user",p.getName() );
 //        List<Integer> userid=userService.findUserByUsername(p.getName());

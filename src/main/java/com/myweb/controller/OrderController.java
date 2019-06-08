@@ -83,17 +83,8 @@ public class OrderController {
     
     @RequestMapping(value="/Admin/Order", method=RequestMethod.GET)
    public ModelAndView showOrder(ModelAndView mv,Principal p){
-          try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-mv.addObject("status",ustatus);
+        
+  mv.addObject("user",p.getName() );
         mv.addObject("cartlist", cartService.findAllCart());
         mv.setViewName("admin/ordermanagement");
         return mv;

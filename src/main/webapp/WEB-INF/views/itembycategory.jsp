@@ -159,7 +159,7 @@
 								<div class="product-details">
                                                                     <h6><a href="<c:url value="/Product/${pro.id}"/>">${pro.name}</a></h6>
 									<div class="price">
-										<h6>$:${pro.price}</h6>
+										<h6>Rs:${pro.price}</h6>
 <!--										<h6 class="l-through">$210.00</h6>-->
 									</div>
 <!--									<div class="prd-bottom">

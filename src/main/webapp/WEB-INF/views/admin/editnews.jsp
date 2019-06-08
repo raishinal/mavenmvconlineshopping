@@ -35,13 +35,13 @@
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="<c:url value="/Admin/Home"/>"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-				<li class="active">Product/Edit</li>
+				<li class="active">News/Edit</li>
 			</ol>
 		</div><!--/.row-->
 		
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Product</h1>
+				<h1 class="page-header">News</h1>
 			</div>
 		</div><!--/.row-->
 				
@@ -49,72 +49,59 @@
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Edit Product</div>
+					<div class="panel-heading">Edit News</div>
 					<div class="panel-body">
 						<div class="col-md-6">
 							 
-                              <form role="form" action="<c:url value="/Admin/Product/Update?${_csrf.parameterName}=${_csrf.token}"/>" method="post" enctype="multipart/form-data">
-                                        <c:forEach items="${product}" var="pro">
+                             
+                             <form role="form" action="<c:url value="/Admin/News/Update?${_csrf.parameterName}=${_csrf.token}"/>" method="post" enctype="multipart/form-data">
+                                 <c:forEach items="${news}" var="ns">
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                         <div class="form-group">
-                                            <label>Product Id</label>
-                                            <input class="form-control" type="number" value="${pro.id}" name="id" readonly>
+                                            <label>ID</label>
+                                            <input class="form-control" type="number" value="${ns.id}" name="id" readonly>
                                              <p class="help-block">${error_title}</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Product Name</label>
-                                            <input class="form-control" type="text" value="${pro.name}" name="name">
-                                             <p class="help-block">${error_title}</p>
-                                        </div>
-                                           <div class="form-group">
-                                            <label>Stock</label>
-                                            <input class="form-control" type="number" value="${pro.stock}" name="stock">
-                                             <p class="help-block">${error_title}</p>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Product Price</label>
-                                            <input class="form-control" type="text" value="${pro.price}" name="price">
-                                             <p class="help-block">${error_tag}</p>
                                         </div>
                                         
                                         <div class="form-group">
-                                            <label>Product Description</label>
-                                            <textarea class="form-control"  name="description" rows="7">${pro.description}</textarea>
+                                            <label>Blog title</label>
+                                            <input class="form-control" type="text" value="${ns.title}" name="title">
+                                             <p class="help-block">${error_title}</p>
                                         </div>
-                                         <div class="form-group">
-                                            <label>Product Specification</label>
-                                            <textarea class="form-control"  name="specification" rows="7">${pro.specification}</textarea>
+                                        
+                                        
+                                        <div class="form-group">
+                                            <label>News Description</label>
+                                            <textarea class="form-control" name="description" rows="7">${ns.description}</textarea>
                                         </div>
                                        
+                                       <div class="form-group">
+                                            <label>Status</label>
+                                            <input class="form-control" type="number"value="${ns.status}" name="status">
+                                             
+                                        </div>
                                         
-                                        <div class="form-group">
-                                             <label>Category</label>
-                                            <input class="form-control" type="number" value="${pro.category}" name="category" readonly>
-                                            
-                                        </div>
-                                        <div class="form-group">
+                                       <div class="form-group">
                                              <label>Tags</label>
-                                            <input class="form-control" type="text" value="${pro.tags}" name="tags" readonly>
+                                            <input class="form-control" type="text" value="${ns.tags}" name="tags" readonly>
                                             
                                         </div>
                                         <div class="form-group">
-                                             <label>Image</label>
-                                            <input class="form-control" type="text" value="${pro.imageName}" name="imagename" readonly>
-                                            
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Product Image</label>
-                                            <input type="file" name="image" placeholder="Select image file if u want to edit">
+                                            <label>Prev Image</label>
+                                            <input type="text" name="imagename" value="${ns.imageName}" readonly>
                                             <p class="help-block"></p>
                                         </div>
-                                        </c:forEach>
+                                        <div class="form-group">
+                                            <label>News Image</label>
+                                            <input type="file" name="image" placeholder="Select image file">
+                                            <p class="help-block"></p>
+                                        </div>
                                       
                                         <button type="submit" class="btn btn-default">Submit Button</button>
-                                        <button type="reset" class="btn btn-default" >Reset Button</button>
-                                         
+                                        <button type="reset" class="btn btn-default">Reset Button</button>
+                                        
+                                       </c:forEach>
                                     </form>
-                                       
-                             
                              
                              
                              

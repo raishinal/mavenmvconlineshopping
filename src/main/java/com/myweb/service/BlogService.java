@@ -22,8 +22,8 @@ public interface BlogService {
     public List<Blog> findBlogByCategory(int category);
     public List<Blog> findBlogByActivation();
     
-    public void updateBlog(Blog bl);
+    public boolean updateBlog(Blog bl);
     
-    public void deleteBlog(int id);
+    public boolean deleteBlog(int id);
     boolean uploadImage(MultipartFile image);
 }

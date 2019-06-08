@@ -80,7 +80,7 @@
 				</div>
 				<div class="col-lg-6">
 					<div class="login_form_inner">
-						<h3>Log in to enter</h3>
+						<h3>Login to enter</h3>
 						<form class="row login_form" action="<c:url value="/Login?${_csrf.parameterName}=${_csrf.token}"/>" method="post" id="contactForm" novalidate="novalidate">
 							<div class="col-md-12 form-group">
 								<input type="text" class="form-control" id="name" name="username" placeholder="Username" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Username'">
@@ -95,7 +95,7 @@
 								</div>
 							</div>
 							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" class="primary-btn">Log In</button>
+								<button type="submit" value="submit" class="primary-btn">Login</button>
 								<a href="#">Forgot Password?</a>
 							</div>
 						</form>

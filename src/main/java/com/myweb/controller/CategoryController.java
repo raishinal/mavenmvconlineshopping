@@ -34,17 +34,7 @@ public class CategoryController {
     private int ustatus=0;
     @GetMapping("/Admin/Category/Add")
     public ModelAndView addCategory(ModelAndView mv,Principal p){
-            try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-            mv.addObject("status",ustatus);
+            mv.addObject("user",p.getName() );
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.setViewName("admin/addcategory");
         return mv;
@@ -54,7 +44,7 @@ public class CategoryController {
     public ModelAndView saveCategory(ModelAndView mv,
                                     @ModelAttribute Category cat,Principal p){
 
-mv.addObject("username",p.getName());
+ mv.addObject("user",p.getName() );
         System.out.println(cat.toString());
         categoryService.addCategory(cat);
         
@@ -65,17 +55,7 @@ mv.addObject("username",p.getName());
     
     @GetMapping("/Admin/Category/Show")
     public ModelAndView showCategories(ModelAndView mv,Principal p){
-            try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-            mv.addObject("status",ustatus);
+            mv.addObject("user",p.getName() );
         mv.addObject("categorylist", categoryService.findAllCategory());
         mv.setViewName("admin/showcategory");
         return mv;
@@ -99,6 +79,7 @@ mv.addObject("username",p.getName());
    
     @RequestMapping(value="/Admin/Category/Edit/{id}", method=RequestMethod.GET)
    public ModelAndView editProduct(@PathVariable int id,ModelAndView mv,Principal p){
+        mv.addObject("user",p.getName() );
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("category", categoryService.findCategoryById(id));
         mv.setViewName("admin/editcategory");
@@ -120,17 +101,7 @@ mv.addObject("username",p.getName());
             
             ){
       
-          try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-          mv.addObject("status",ustatus);
+        mv.addObject("user",p.getName() );
       category.setId(id);
       category.setTitle(title);
       category.setTags(tags);

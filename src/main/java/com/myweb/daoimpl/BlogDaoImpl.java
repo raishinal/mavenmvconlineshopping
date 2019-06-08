@@ -71,13 +71,32 @@ List mcl = query.list();
     }
 
     @Override
-    public void update(Blog bl) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean update(Blog bl) {
+              boolean status=false;
+ try( Session session = sessionFactory.getCurrentSession()) {
+           session.beginTransaction();
+            session.update(bl);
+            session.getTransaction().commit();
+            status = true;
+           
+        }
+ return status;
     }
 
     @Override
-    public void delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean delete(int id) {
+         Blog bl=new Blog();
+        bl.setId(id);
+        boolean status=false;
+ try( Session session = sessionFactory.getCurrentSession()) {
+           session.beginTransaction();
+            session.delete(bl);
+            session.getTransaction().commit();
+            session.close();
+            status = true;
+           
+        }
+ return status;
     }
 
     @Override

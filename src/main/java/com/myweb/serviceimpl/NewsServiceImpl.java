@@ -48,13 +48,13 @@ public class NewsServiceImpl implements NewsService{
     }
 
     @Override
-    public void updateNews(News bl) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean updateNews(News bl) {
+      return newsDao.update(bl);
     }
 
     @Override
-    public void deleteNews(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean deleteNews(int id) {
+        return newsDao.delete(id);
     }
 
     @Override

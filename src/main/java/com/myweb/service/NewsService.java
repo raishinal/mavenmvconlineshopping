@@ -23,8 +23,8 @@ public interface NewsService {
     public List<News> findNewsByCategory(int category);
     public List<News> findnewsByActivation();
     
-    public void updateNews(News bl);
+    public boolean updateNews(News bl);
     
-    public void deleteNews(int id);
+    public boolean deleteNews(int id);
     boolean uploadImage(MultipartFile image);
 }

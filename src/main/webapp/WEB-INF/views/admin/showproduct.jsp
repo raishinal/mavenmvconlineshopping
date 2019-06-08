@@ -80,7 +80,7 @@
                                             <td>${pro.price}</td>
 
                                             <td><a href="<c:url value="/Admin/Product/Edit/${pro.id}"/>">Edit</a></td>
-                                            <td><a href="<c:url value="/Admin/Product/Delete/${pro.id}"/>">Delete</a></td>
+                                            <td><a href="<c:url value="/Admin/Product/Delete/${pro.id}"/>" onclick="return confirm('Are you sure?')">Delete</a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

@@ -82,7 +82,7 @@
                                             <td>${cat.now}</td>
                                             <td>${cat.status}</td>
                                             <td><a href="<c:url value="/Admin/Blog/Edit/${cat.id}"/>">Edit</a></td>
-                                            <td><a href="<c:url value="/Admin/Blog/Delete/${cat.id}"/>">Delete</td>
+                                            <td><a href="<c:url value="/Admin/Blog/Delete/${cat.id}"/>" onclick="return confirm('Are you sure?')">Delete</a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

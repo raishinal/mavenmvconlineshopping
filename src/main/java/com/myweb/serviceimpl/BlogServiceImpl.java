@@ -53,13 +53,13 @@ public class BlogServiceImpl implements BlogService{
     }
 
     @Override
-    public void updateBlog(Blog bl) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean updateBlog(Blog bl) {
+        return blogDao.update(bl);
     }
 
     @Override
-    public void deleteBlog(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean deleteBlog(int id) {
+        return blogDao.delete(id);
     }
 
     @Override

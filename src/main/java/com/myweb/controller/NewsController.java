@@ -11,8 +11,10 @@ import com.myweb.service.NewsService;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,17 +44,7 @@ public class NewsController {
     
     @RequestMapping(value="/Admin/News/Add", method=RequestMethod.GET)
    public ModelAndView addNews(ModelAndView mv,Principal p){
-          try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-          mv.addObject("status",ustatus);
+           mv.addObject("user",p.getName() );
         mv.addObject("categorylist", categoryService.findMainCategory());
         mv.addObject("tagslist", categoryService.findAllCategory());
         mv.setViewName("admin/addnews");
@@ -60,17 +52,7 @@ public class NewsController {
     }
     @RequestMapping(value="/Admin/News/Show", method=RequestMethod.GET)
    public ModelAndView showNews(ModelAndView mv,Principal p){
-          try{
-            if(p.getName()!=null)
-            {
-                ustatus=1;
-                mv.addObject("username",p.getName());
-        }
-        }
-        catch(Exception e){
-            System.out.println(e);
-        }
-          mv.addObject("status",ustatus);
+           mv.addObject("user",p.getName() );
         mv.addObject("tagslist", categoryService.findAllCategory());
         mv.addObject("newslist", newsService.findAllNews());
         mv.setViewName("admin/displaynews");
@@ -117,5 +99,73 @@ public class NewsController {
         }
  
     }
+    
+    
+    
+        @RequestMapping(value="/Admin/News/Delete/{id}", method=RequestMethod.GET)
+   public String deleteNews(@PathVariable int id,Principal p ){
+        if(newsService.deleteNews(id)){
+        return "redirect:/Admin/News/Show?Success";
+
+    }
+        else{
+           return "redirect:/Admin/News/Show?Failed";
+        }
+   }
+   
+    @RequestMapping(value="/Admin/News/Edit/{id}", method=RequestMethod.GET)
+   public ModelAndView editProduct(@PathVariable int id,ModelAndView mv,Principal p){
+          mv.addObject("user",p.getName() );
+        mv.addObject("categorylist", categoryService.findMainCategory());
+        mv.addObject("tags", categoryService.findAllCategory());
+        mv.addObject("news", newsService.findNewsById(id));
+        mv.setViewName("admin/editnews");
+        return mv;
+    }
+   
+   
+   
+      @RequestMapping(value="/Admin/News/Update", method=RequestMethod.POST)
+    public String updateBlog(
+            @RequestParam("id") int id,
+            @RequestParam("title") String title,
+            @RequestParam("tags") String tags,
+            @RequestParam("description") String description,
+            @RequestParam("status") int status,
+            @RequestParam("imagename") String imagename,
+            @RequestParam("image") MultipartFile image
+            
+            ){
+        
+        
+        List<News> ns=newsService.findNewsById(id);
+        news.setNow(ns.get(0).getNow());
+        if(!image.isEmpty()){
+           if(newsService.uploadImage(image)){
+             news.setImageName(image.getOriginalFilename());
+           }
+           else{
+                     return "redirect:/Admin/News/Show?image upload failed";
+           }
+       }
+       else{
+          
+          news.setImageName(imagename);
+           
+       }
+      news.setId(id);
+      news.setTitle(title);
+      news.setTags(tags);
+      news.setDescription(description);
+      news.setStatus(status);
+       
+        if(!newsService.updateNews(news)){
+         return "redirect:/Admin/News/Show?Failed";
+       }
+        else{
+             return "redirect:/Admin/News/Show?Success";
+        }
+    }
+    
    
 }
